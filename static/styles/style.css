@@ -1,0 +1,319 @@
+
+html {
+scroll-behavior: smooth;
+width: 100vw ! important;
+height: 100% ! important;
+margin: 0px ! important;
+padding: 0px ! important;
+overflow-x: hidden;
+}
+body{
+font-family:sans-serif;
+display:flex;
+flex-direction:column;
+height:100vh;
+}
+/*Header section starts*/
+header{
+max-height:80px; ! important;
+width:100%
+}
+header nav{
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+header .navbar-brand{
+padding-left:20px;
+font-weight:bold;
+}
+header nav .collapse ul{
+margin-left:100px;
+}
+header nav .collapse ul li{
+padding-left:10px;
+text-align:center;
+}
+/*header nav .collapse ul li:hover{
+background-color:crimson;
+}*/
+header nav .collapse span{
+margin-left:210px;
+padding-top:15px;
+font-size:17px;
+}
+/*Header section Ends*/
+/*Home section starts*/
+.home #carouselExampleIndicators .carousel-inner{
+max-height:100vh !important;
+width:100% ! important;
+}
+/*Home section Ends*/
+/*Search section starts*/
+.searching{
+padding-top:50px;
+padding-bottom:50px;
+background-color:rgb(242,242,242);
+width:100%;
+}
+.searching .row h1 span{
+color:green;
+}
+.searching .row a{
+margin-left:70%;
+padding:15px;
+border:2px solid green;
+background-color:green;
+color:white;
+border-radius:5%;
+text-decoration:none;
+font-family-sans-serif;
+display:inline-block;
+}
+.searching .row a:active{
+background:none;
+color:green;
+}
+/*About section starts*/
+.about{
+padding-bottom:150px;
+background-image: url("/static/images/stone1.jpg");
+opacity:0.8;
+background-attachment: fixed;
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+width:100%;
+color:white;
+}
+.htop{
+text-align:center;
+padding-top:100px;
+}
+.htop h3{
+color:green;
+}
+.about .container-fluid .row .para{
+padding-top:60px;
+text-align:justify;
+padding-right:6%;
+}
+/*About section Ends*/
+/*Service section starts*/
+.services{
+padding-bottom:100px;
+}
+.services .container-fluid .row{
+padding:5%;
+}
+.services .container-fluid .row #cards{
+display:flex;
+justify-content: space-around;
+padding-top:20px;
+}
+.services .container-fluid .row .card{
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.services .container-fluid .inner{
+overflow:hidden;
+}
+.services .container-fluid .inner img{
+transition:all 1.5s ease;
+}
+.services .container-fluid .inner:hover img{
+transform:scale(1.5);
+}
+/*Service section Ends*/
+/*Contact,Salon Registration section starts*/
+.contact{
+background-image: url("/static/images/inst.jpg");
+background-repeat: no-repeat;
+background-size: cover;
+}
+.contact .container-fluid .row form{
+background-color:rgba(0,0,0,0.9);
+width:50%;
+padding:20px;
+margin-left:25%;
+margin-bottom:20px;
+}
+.contact .container-fluid .row form label{
+color:white;
+}
+.contact .container-fluid .row form span{
+color:crimson;
+}
+.sreg{
+background-image: url("/static/images/towel.jpg");
+background-repeat: no-repeat;
+background-size: cover;
+}
+.sreg .container-fluid .htop{
+background-color:rgba(0,0,0,0.8);
+width:50%;
+padding:0.5%;
+margin-left:25%;
+margin-top:14%;
+border-radius:10px 10px 0px 0px;
+}
+.sreg .container-fluid .htop h4{
+color:white;
+font-family:sans-serif;
+}
+.sreg .container-fluid .htop h4 span{
+color:green;
+font-family:sans-serif;
+}
+.sreg .container-fluid .row form{
+background-color:rgba(0,0,0,0.6);
+width:50%;
+padding:20px;
+margin-left:25%;
+margin-bottom:20px;
+border-radius:0px 0px 10px 10px;
+}
+.sreg .container-fluid .row form label{
+color:white;
+}
+.sreg .container-fluid .row form span{
+color:crimson;
+}
+
+/*Contact,Salon Registration section Ends*/
+/*Footer section starts*/
+footer{
+background-color:#212529;
+width:100vw;
+font-family:sans-serif;
+color:white;
+margin-top:auto;
+/*z-index:1;*/
+}
+footer p{
+padding-top:35px;
+}
+footer p a span{
+color:green;
+}
+footer p a:hover{
+text-decoration:none;
+}
+/*Footer section Ends*/
+/*User Login Form section starts*/
+.sflog{
+background-image: url("/static/images/water.jpg");
+background-repeat: no-repeat;
+background-size: 100% 100%;
+}
+.sflog .container-fluid .row #std{
+display:flex;
+justify-content: space-around;
+margin-top:150px;
+margin-bottom:140px;
+}
+.sflog .container-fluid .row form{
+background-color: #212529;
+opacity:0.9;
+width:50%;
+height:120%;
+border-radius:5px;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.sflog .container-fluid .row form h3{
+padding-top:30px;
+color:white;
+font-family:sans-serif;
+}
+.sflog .container-fluid .row form h3 span{
+color:green;
+font-family:sans-serif;
+}
+.sflog .container-fluid .row form input{
+margin-top:20px;
+width:75%;
+height:30px;
+border-radius:5px;
+border:none;
+font-family:sans-serif;
+outline:none;
+}
+.sflog .container-fluid .row form button{
+margin-top:20px;
+font-family:sans-serif;
+width:30%;
+height:30px;
+border-radius:5px;
+outline:none;
+background-color:green;
+border:2px solid green;
+color:white;
+}
+.sflog .container-fluid .row form button:active{
+background-color:crimson;
+border:2px solid crimson;
+color:white;
+}
+.sflog .container-fluid .row form h6{
+padding-top:30px;
+color:white;
+font-family:sans-serif;
+}
+.sflog .container-fluid .row form a{
+color:crimson;
+text-decoration:none;
+font-family:sans-serif;
+}
+.sowner{
+background-image: url("/static/images/salonh.jpg");
+background-repeat: no-repeat;
+background-size: 100% 100%;
+align-items:center;
+justify-content:center;
+color:white;
+font-family:sans-serif;
+padding-top:60px;
+}
+.salonowner .container-fluid .row .stop{
+color:black;
+font-size:sans-serif;
+margin:25%;
+}
+
+.addsal{
+background-image: url("/static/images/pin.jpg");
+background-repeat: no-repeat;
+background-size: cover;
+}
+.addsal .container-fluid .htop{
+background-color:rgba(0,0,0,0.8);
+width:50%;
+padding:0.5%;
+margin-left:25%;
+margin-top:14%;
+border-radius:10px 10px 0px 0px;
+}
+.addsal .container-fluid .htop h4{
+color:white;
+font-family:sans-serif;
+}
+.addsal .container-fluid .htop h4 span{
+color:green;
+font-family:sans-serif;
+}
+.addsal .container-fluid .row form{
+background-color:rgba(0,0,0,0.6);
+width:50%;
+padding:20px;
+margin-left:25%;
+margin-bottom:20px;
+border-radius:0px 0px 10px 10px;
+}
+.addsal .container-fluid .row form label{
+color:white;
+}
+.addsal.container-fluid .row form span{
+color:crimson;
+}
+/*.supdate{
+background-image: url("/static/images/pin.jpg");
+background-repeat: no-repeat;
+background-size: 100% 100%;
+}*/
