@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="{% static 'styles/style.css' %}" rel="stylesheet"/>
 </head>
-<body>
+<body id="addsal">
 <!--Header Section Starts-->
     <header>
                     <nav class="navbar navbar-expand-lg navbar-light bg-dark fixed-top shadow">
-                        <a class="navbar-brand text-success text-light" href="{% url 'index' %}">Spa<span class="text-success">Salon</span></a>
+                        <a class="navbar-brand text-success text-light" href="{% url 'salonhome' %}">Spa<span class="text-success">Salon</span></a>
                         <button class="navbar-toggler bg-success" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
@@ -35,7 +35,7 @@
     </header>
 <!--Header Section Ends-->
 <!--Updation Part Starts-->
-<section class="addsal" id="addsal">
+<section class="addsal">
         <div class="container-fluid">
             <div class="htop text-white">
                 <h4>Update <span>Salon</span></h4>

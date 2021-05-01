@@ -49,3 +49,9 @@ class bookingdetails(models.Model):
     Date = models.CharField(max_length=50)
     Time = models.TimeField()
     Status = models.CharField(max_length=20)
+
+class reviews(models.Model):
+    Uid = models.CharField(max_length=50)
+    Sid = models.CharField(max_length=50)
+    Name = models.CharField(max_length=50)
+    Review = models.CharField(max_length=250)

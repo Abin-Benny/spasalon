@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import login,logout
-from user.models import salonlogin,clientlogin,salonreg,clientreg, salondetails,bookingdetails
+from user.models import salonlogin,clientlogin,salonreg,clientreg, salondetails,bookingdetails,reviews
 from django.contrib import messages
 
 # Create your views here.
@@ -335,7 +335,41 @@ def statusupdate(request,ids):
     else:
         return redirect("salonlogin")
 
+def reviewss(request,id):
+    if 'cid' in request.session:
+        cid = request.session['cid']
+        sreviews = reviews.objects.filter(Sid=id)
+        return render(request, "reviews.html", {'sreviews': sreviews, 'k': id})
+    else:
+        return redirect("userlogin")
 
+def addreviews(request,id):
+    if 'cid' in request.session:
+        cid = request.session['cid']
+        sdetails = salondetails.objects.get(Login_id=id)
+        sid = sdetails.Login_id.id
+        return render(request, "addreview.html", {'sid': sid})
+    else:
+        return redirect("userlogin")
+
+def submitreviews(request,id):
+    if 'cid' in request.session:
+        clid = request.session['cid']
+        if request.method == 'POST':
+            rname= request.POST.get('name')
+            rrev= request.POST.get('review')
+
+            reviewform = reviews()
+            reviewform.Uid = clid
+            reviewform.Sid = id
+            reviewform.Name = rname
+            reviewform.Review = rrev
+            reviewform.save()
+            return redirect("userhome")
+        else:
+            return render(request,"addreview.html")
+    else:
+        return redirect("userlogin")
 
 def logouts(request):
     logout(request)

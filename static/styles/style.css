@@ -123,7 +123,7 @@ transform:scale(1.5);
 }
 /*Service section Ends*/
 /*Contact,Salon Registration section starts*/
-.contact{
+#contact{
 background-image: url("/static/images/inst.jpg");
 background-repeat: no-repeat;
 background-size: cover;
@@ -151,7 +151,7 @@ background-color:rgba(0,0,0,0.8);
 width:50%;
 padding:0.5%;
 margin-left:25%;
-margin-top:15%;
+margin-top:14%;
 border-radius:10px 10px 0px 0px;
 }
 .sreg .container-fluid .htop h4{
@@ -198,7 +198,7 @@ text-decoration:none;
 }
 /*Footer section Ends*/
 /*User Login Form section starts*/
-.sflog{
+#sflog{
 background-image: url("/static/images/water.jpg");
 background-repeat: no-repeat;
 background-size: 100% 100%;
@@ -282,7 +282,7 @@ font-size:sans-serif;
 margin:25%;
 }
 
-.addsal{
+#addsal{
 background-image: url("/static/images/pin.jpg");
 background-repeat: no-repeat;
 background-size: cover;
@@ -347,4 +347,10 @@ background-size: cover;
 background-image: url("/static/images/pay.jpg");
 background-repeat: no-repeat;
 background-size: cover;
+}
+.feed{
+background-image: url("/static/images/water.jpg");
+background-repeat: no-repeat;
+background-size: cover;
+
 }

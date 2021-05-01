@@ -20,4 +20,7 @@ urlpatterns=[
     path('User/Login/Appointment/Payment/', views.payment, name="payment"),
     path('User/Login/Appointment/BankPayment/', views.pay, name="pay"),
     path('Logout', views.logouts, name="logouts"),
+    path('Reviews/<id>', views.reviewss, name="reviews"),
+    path('AddReview/<id>', views.addreviews, name="addreviews"),
+    path('Review_Form/<id>', views.submitreviews, name="submitreviews"),
     ]
