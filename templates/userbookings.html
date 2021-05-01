@@ -11,7 +11,7 @@
          font-family: Arial, Helvetica, sans-serif;
          border-collapse: collapse;
          width: 100%;
-         margin-top:10%;
+         margin-top:2%;
          }
 
         .display td, .display th {
@@ -35,10 +35,10 @@
 </head>
 <body class="back">
 <!--Header Section Starts-->
-   <header class="head">
-                    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow">
-                        <a class="navbar-brand text-success" href="{% url 'userhomepay' %}">SpaSalon</a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <header>
+                    <nav class="navbar navbar-expand-lg navbar-light bg-dark fixed-top shadow">
+                        <a class="navbar-brand text-success text-light" href="{% url 'userhomepay' %}">Spa<span class="text-success">Salon</span></a>
+                        <button class="navbar-toggler bg-success" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarText">
@@ -55,36 +55,44 @@
     </header>
 <!--Header Section Ends-->
 <!--Body Section Starts-->
-<center>
-    <table class="display">
-    <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Email</th>
-        <th>Mobile</th>
-        <th>Service</th>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Status</th>
-        <th>Action</th>
-    </tr>
-        {% for i in applist %}
-    <tr>
-        <td>{{i.First_name}}</td>
-        <td>{{i.Last_name}}</td>
-        <td>{{i.Email}}</td>
-        <td>{{i.Mobile}}</td>
-         <td>{{i.Services}}</td>
-        <td>{{i.Date}}</td>
-        <td>{{i.Time}}</td>
-        <td>{{i.Status}}</td>
-        <td><a class="text-success" href="{% url 'pay' %}">Make Payment</a></td>
+<section>
+    <div class="container-fluid">
+         <div class="htop text-white">
+                <h3>Confirmed Bookings</h3>
+         </div>
+        <div class="row">
+                <table class="display">
+                     <tr>
+                        <th>Sl.No</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Service</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                        {% for i in applist %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{i.First_name}}</td>
+                        <td>{{i.Last_name}}</td>
+                        <td>{{i.Email}}</td>
+                        <td>{{i.Mobile}}</td>
+                         <td>{{i.Services}}</td>
+                        <td>{{i.Date}}</td>
+                        <td>{{i.Time}}</td>
+                        <td>{{i.Status}}</td>
+                        <td><a class="text-success" href="{% url 'pay' %}">Make Payment</a></td>
 
-    </tr>
-        {% endfor %}
- </table>
-</center>
-
+                    </tr>
+                        {% endfor %}
+                </table>
+        </div>
+    </div>
+</section>
 <!--Footer Section Starts-->
    <footer>
        <div class="container-fluid">

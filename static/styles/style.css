@@ -141,7 +141,7 @@ color:white;
 .contact .container-fluid .row form span{
 color:crimson;
 }
-.sreg{
+#sreg{
 background-image: url("/static/images/towel.jpg");
 background-repeat: no-repeat;
 background-size: cover;
@@ -151,7 +151,7 @@ background-color:rgba(0,0,0,0.8);
 width:50%;
 padding:0.5%;
 margin-left:25%;
-margin-top:14%;
+margin-top:15%;
 border-radius:10px 10px 0px 0px;
 }
 .sreg .container-fluid .htop h4{
@@ -340,6 +340,11 @@ color:crimson;
 }*/
 .sdetail{
 background-image: url("/static/images/water.jpg");
+background-repeat: no-repeat;
+background-size: cover;
+}
+.bank{
+background-image: url("/static/images/pay.jpg");
 background-repeat: no-repeat;
 background-size: cover;
 }

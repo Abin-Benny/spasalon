@@ -223,16 +223,16 @@ def userhome(request):
     if 'cid' in request.session:
         id = request.session['cid']
         sdetails = salondetails.objects.all()
-        #applist = bookingdetails.objects.filter(Lid=id, Status="Confirm")
-        return render(request, "userhome.html", {'sdetails': sdetails})
-        '''if applist:
-            applist = bookingdetails.objects.filter(Lid=id, Status="Confirm")
-            for s in applist:
-                k = s.Lid
-                return render(request, "userhomepay.html", {'sdetails': sdetails, 'k': k})
+        applist = bookingdetails.objects.filter(Lid=id, Status="Confirm")
+        #return render(request, "userhome.html", {'sdetails': sdetails})
+        if applist:
+            #applist = bookingdetails.objects.filter(Lid=id, Status="Confirm")
+            #for s in applist:
+                #k = s.Lid
+            return render(request, "userhomepay.html", {'sdetails': sdetails})
 
         else:
-            return render(request, "userhome.html", {'sdetails': sdetails})'''
+            return render(request, "userhome.html", {'sdetails': sdetails})
     else:
         return redirect("userlogin")
 
