@@ -24,7 +24,7 @@
                                     <a class="nav-link text-success" href="#">Appointments</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-success" href="#">Bookings</a>
+                                    <a class="nav-link text-success" href="{% url 'bookings' %}">Bookings</a>
                                 </li>
                                  <li class="nav-item">
                                     <a class="nav-link text-success" href="{% url 'logouts' %}">Logout</a>
@@ -42,42 +42,46 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                        <form method="POST" name="contact" enctype="multipart/form-data" action="{% url 'salonhome' %}">
+                    {% for i in udetail %}
+                        <form method="POST" name="contact" enctype="multipart/form-data" action="{%url 'updatesalon' %}">
                             {%csrf_token%}
                              <div class="form-group">
                                  <label for="salonname">Salon Name</label>
-                                 <input type="text" class="form-control" id="salonname" name="salonname">
+                                 <input type="text" class="form-control" id="salonname" name="salonname" value="{{i.Salon_name}}" placeholder="Salon Name">
                                  <span id="lsalon"></span>
                              </div>
                             <div class="form-group">
                                 <label for="openinghours">Opening Hours</label>
-                                <input type="text" class="form-control" id="openinghours" name="openinghours">
+                                <input type="text" class="form-control" id="openinghours" name="openinghours" value="{{i.Opening_hours}}" placeholder="Opening Hours">
                                 <span id="lopeninghours"></span>
                             </div>
                             <div class="form-group">
                                  <label for="services">Services</label>
-                                 <textarea class="form-control" id="services" name="services" rows="3"></textarea>
+                                 <textarea class="form-control" id="services" name="services" rows="3" placeholder="Add Your Services Seperated With Commas..">{{i.Services}}</textarea>
                                  <span id="lservice"></span>
-                            </div>
+                             </div>
                             <div class="form-group">
                                  <label for="serviceprice">Service Price</label>
-                                 <textarea class="form-control" id="serviceprice" name="serviceprice" rows="3"></textarea>
+                                 <textarea class="form-control" id="serviceprice" name="serviceprice" rows="3" placeholder="Eg:Hair cut : Rs.90,Shaving :Rs.50 ,Body Massage :Rs1200">{{i.Service_price}}</textarea>
                                  <span id="lservice price"></span>
-                            </div>
-                            <div class="form-group">
+                             </div>
+                             <div class="form-group">
                                 <label for="image">Image</label>
+                                 <img src="{{MEDIA_URL}}{{i.Image.url}}" height="50px" width="50px">
                                 <input type="file" class="form-control" id="image" name="image">
                                 <span id="limage"></span>
                             </div>
                             <div class="form-group">
-                                 <label for="address">Address</label>
-                                 <textarea class="form-control" id="address" name="address" rows="3"></textarea>
+                                 <label for="address">Salon Address</label>
+                                 <textarea class="form-control" id="address" name="address" rows="3" placeholder="Salon Address">{{i.Address}}</textarea>
                                  <span id="laddress"></span>
-                            </div>
+                             </div>
+
                              <center>
                                  <button type="submit" class="btn btn-success" onclick="return submitmessage()">Submit</button>
                              </center>
                         </form>
+                    {% endfor %}
                 </div>
             </div>
         </div>

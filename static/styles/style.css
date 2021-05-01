@@ -98,9 +98,9 @@ padding-right:6%;
 }
 /*About section Ends*/
 /*Service section starts*/
-.services{
+/*.services{
 padding-bottom:100px;
-}
+}*/
 .services .container-fluid .row{
 padding:5%;
 }
@@ -167,7 +167,7 @@ background-color:rgba(0,0,0,0.6);
 width:50%;
 padding:20px;
 margin-left:25%;
-margin-bottom:20px;
+margin-bottom:3%;
 border-radius:0px 0px 10px 10px;
 }
 .sreg .container-fluid .row form label{
@@ -224,6 +224,11 @@ font-family:sans-serif;
 }
 .sflog .container-fluid .row form h3 span{
 color:green;
+font-family:sans-serif;
+}
+.sflog .container-fluid .row p{
+padding-top:30px;
+color:white;
 font-family:sans-serif;
 }
 .sflog .container-fluid .row form input{
@@ -312,8 +317,29 @@ color:white;
 .addsal.container-fluid .row form span{
 color:crimson;
 }
-/*.supdate{
-background-image: url("/static/images/pin.jpg");
-background-repeat: no-repeat;
-background-size: 100% 100%;
+header nav .collapse p{
+margin-top:50px;
+}
+.salonhome .container-fluid .row .text{
+margin-left:80%;
+}
+.sdetail .container-fluid .row #cards{
+display:flex;
+justify-content: space-around;
+padding-top:8%;
+padding-bottom:50px;
+}
+.sdetail .container-fluid .row .card{
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.sdetail .container-fluid .row #cards h4{
+color:green;
+}
+/*.sdetail .container-fluid .row #cards h6{
+color:crimson;
 }*/
+.sdetail{
+background-image: url("/static/images/water.jpg");
+background-repeat: no-repeat;
+background-size: cover;
+}

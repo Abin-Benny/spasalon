@@ -28,3 +28,24 @@ class clientreg(models.Model):
     Password=models.CharField(max_length=20)
     Mobile= models.CharField(max_length=20)
     Address=models.CharField(max_length=250)
+
+class salondetails(models.Model):
+    Login_id =models.ForeignKey(salonlogin,on_delete=models.CASCADE)
+    Salon_name=models.CharField(max_length=50)
+    Opening_hours=models.CharField(max_length=50)
+    Services=models.CharField(max_length=300)
+    Service_price=models.CharField(max_length=350)
+    Image = models.ImageField(upload_to='images')
+    Address=models.CharField(max_length=250)
+
+class bookingdetails(models.Model):
+    Lid = models.CharField(max_length=50)
+    Slid = models.CharField(max_length=50)
+    First_name = models.CharField(max_length=50)
+    Last_name = models.CharField(max_length=50)
+    Email = models.EmailField(max_length=50)
+    Mobile = models.CharField(max_length=20)
+    Services = models.CharField(max_length=40)
+    Date = models.CharField(max_length=50)
+    Time = models.TimeField()
+    Status = models.CharField(max_length=20)

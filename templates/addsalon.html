@@ -36,7 +36,7 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                        <form method="POST" name="contact" enctype="multipart/form-data" action="{% url 'salonhome' %}">
+                        <form method="POST" name="contact" enctype="multipart/form-data" action="{% url 'addsalon' %}">
                             {%csrf_token%}
                              <div class="form-group">
                                  <label for="salonname">Salon Name</label>
@@ -64,7 +64,7 @@
                                 <span id="limage"></span>
                             </div>
                             <div class="form-group">
-                                 <label for="address">Services</label>
+                                 <label for="address">Address</label>
                                  <textarea class="form-control" id="address" name="address" rows="3" placeholder="Salon Address"></textarea>
                                  <span id="laddress"></span>
                             </div>
