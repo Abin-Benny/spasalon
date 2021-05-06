@@ -3,11 +3,67 @@
 {% load static %}
 <head>
     <meta charset="UTF-8">
-    <title>Salon Home Page</title>
+    <title>Appointments</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="{% static 'styles/style.css' %}" rel="stylesheet"/>
+    <style>
+        .display{
+         font-family: Arial, Helvetica, sans-serif;
+         border-collapse: collapse;
+         width: 100%;
+         margin:2%;
+         }
+
+        .display td, .display th {
+         border: 1px solid #ddd;
+         padding: 8px;
+         }
+        .display tr:nth-child(even){
+         background-color: #f2f2f2;
+         }
+        .display tr:hover {
+         background-color: #ddd;
+         }
+        .display th {
+         padding-top: 12px;
+         padding-bottom: 12px;
+         text-align: left;
+         background-color: #4CAF50;
+         color: white;
+         }
+         @media screen and (max-width: 875px) {
+            .row table {
+             border: 0;
+             }
+            .row table thead {
+             display: none;
+             }
+             .row table tr {
+              margin-bottom: 20px;
+              display: block;
+              border-bottom: 2px solid #ddd;
+	          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+              }
+              .row table td {
+               display: block;
+               text-align: right;
+               font-size: 13px;
+               }
+               .row table td:last-child {
+                border-bottom: 0;
+                }
+                .row table td::before {
+                content: attr(data-label);
+                float: left;
+                font-weight: bold;
+                }
+    	        .row tbody{
+			    line-height:0!important;
+		        }
+         }
+    </style>
 </head>
-<body class="sowner">
+<body>
 <!--Header Section Starts-->
     <header>
                     <nav class="navbar navbar-expand-lg navbar-light bg-dark fixed-top shadow">
@@ -38,19 +94,48 @@
     </header>
 <!--Header Section Ends-->
 <!--Body Section Starts-->
-<section class="salonhome">
+<section>
     <div class="container-fluid">
+         <div class="htop text-white">
+                <h3>Appointments</h3>
+         </div>
         <div class="row">
-            <div class="col-12">
-                <div class="text-right">
-                     <p>Welcome , {{fsname}} {{lsname}}</p>
-                </div>
-
-
-            </div>
+                <table class="display">
+                    <thead>
+                        <tr>
+                            <th>Sl.No</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Mobile</th>
+                            <th>Service</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                            <!--<th>Action</th>-->
+                        </tr>
+                    </thead>
+                        {% for i in applist %}
+                    <tbody>
+                        <tr>
+                            <td  data-label="Sl.No">{{forloop.counter}}</td>
+                            <td data-label="First Name">{{i.First_name}}</td>
+                            <td data-label="Last Name">{{i.Last_name}}</td>
+                            <td data-label="Email">{{i.Email}}</td>
+                            <td data-label="Mobile">{{i.Mobile}}</td>
+                            <td data-label="Service">{{i.Services}}</td>
+                            <td data-label="Date">{{i.Date}}</td>
+                            <td data-label="Time">{{i.Time}}</td>
+                            <td data-label="Status">{{i.Status}}</td>
+                            <!--<td data-label="Action"><a class="text-success" href="{% url 'statusupdate' i.id %}">Update Status</a></td>-->
+                        </tr>
+                    </tbody>
+                        {% endfor %}
+                </table>
         </div>
     </div>
 </section>
+
 <!--Footer Section Starts-->
    <footer>
        <div class="container-fluid">
@@ -70,4 +155,4 @@
 
 
 </body>
-</html></html>
+</html>

@@ -31,6 +31,36 @@
          background-color: #4CAF50;
          color: white;
          }
+         @media screen and (max-width: 875px) {
+            .row table {
+             border: 0;
+             }
+            .row table thead {
+             display: none;
+             }
+             .row table tr {
+              margin-bottom: 20px;
+              display: block;
+              border-bottom: 2px solid #ddd;
+	          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+              }
+              .row table td {
+               display: block;
+               text-align: right;
+               font-size: 13px;
+               }
+               .row table td:last-child {
+                border-bottom: 0;
+                }
+                .row table td::before {
+                content: attr(data-label);
+                float: left;
+                font-weight: bold;
+                }
+    	        .row tbody{
+			    line-height:0!important;
+		        }
+         }
     </style>
 </head>
 <body class="back">
@@ -58,36 +88,39 @@
 <section>
     <div class="container-fluid">
          <div class="htop text-white">
-                <h4 class="text-dark">Confirmed <span class="text-success">Bookings</span></h4>
+                <h4 class="text-dark">Your <span class="text-success">Bookings</span></h4>
          </div>
         <div class="row">
                 <table class="display">
-                     <tr>
-                        <th>Sl.No</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Email</th>
-                        <th>Mobile</th>
-                        <th>Service</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Sl.No</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Mobile</th>
+                            <th>Service</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
                         {% for i in applist %}
-                    <tr>
-                        <td>{{forloop.counter}}</td>
-                        <td>{{i.First_name}}</td>
-                        <td>{{i.Last_name}}</td>
-                        <td>{{i.Email}}</td>
-                        <td>{{i.Mobile}}</td>
-                         <td>{{i.Services}}</td>
-                        <td>{{i.Date}}</td>
-                        <td>{{i.Time}}</td>
-                        <td>{{i.Status}}</td>
-                        <td><a class="text-success" href="{% url 'pay' %}">Make Payment</a></td>
-
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <td  data-label="Sl.No">{{forloop.counter}}</td>
+                            <td data-label="First Name">{{i.First_name}}</td>
+                            <td data-label="Last Name">{{i.Last_name}}</td>
+                            <td data-label="Email">{{i.Email}}</td>
+                            <td data-label="Mobile">{{i.Mobile}}</td>
+                            <td data-label="Service">{{i.Services}}</td>
+                            <td data-label="Date">{{i.Date}}</td>
+                            <td data-label="Time">{{i.Time}}</td>
+                            <td data-label="Status">{{i.Status}}</td>
+                            <td><a class="text-success" href="{% url 'pay' %}">Make Payment</a></td>
+                        </tr>
+                    </tbody>
                         {% endfor %}
                 </table>
         </div>
@@ -106,6 +139,7 @@
        </div>
    </footer>
 <!--Footer Section Ends-->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 

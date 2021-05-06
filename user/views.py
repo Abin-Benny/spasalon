@@ -223,7 +223,7 @@ def userhome(request):
     if 'cid' in request.session:
         id = request.session['cid']
         sdetails = salondetails.objects.all()
-        applist = bookingdetails.objects.filter(Lid=id, Status="Confirm")
+        applist = bookingdetails.objects.filter(Lid=id, Status="Confirmed")
         #return render(request, "userhome.html", {'sdetails': sdetails})
         if applist:
             #applist = bookingdetails.objects.filter(Lid=id, Status="Confirm")
@@ -282,22 +282,14 @@ def userhomepay(request):
     if 'cid' in request.session:
         id = request.session['cid']
         sdetails = salondetails.objects.all()
-        applist = bookingdetails.objects.filter(Lid=id, Status="Confirm")
+        applist = bookingdetails.objects.filter(Lid=id, Status="Confirmed")
         if applist:
-            '''applist = bookingdetails.objects.filter(Lid=id, Status="Confirm")
+            '''applist = bookingdetails.objects.filter(Lid=id, Status="Confirmed")
             for s in applist:
                 k = s.Lid'''
             return render(request, "userhomepay.html", {'sdetails': sdetails})
         else:
             return render(request, "userhome.html", {'sdetails': sdetails})
-    else:
-        return redirect("userlogin")
-
-def payment(request):
-    if 'cid' in request.session:
-        clid = request.session['cid']
-        applist=bookingdetails.objects.filter(Lid=clid,Status="Confirm")
-        return render(request,"userbookings.html",{'applist':applist})
     else:
         return redirect("userlogin")
 
@@ -307,16 +299,6 @@ def pay(request):
         return render(request,"bank.html")
     else:
         return redirect("userlogin")
-
-def bookings(request):
-    if 'sid' in request.session:
-        id = request.session['sid']
-        applist=bookingdetails.objects.filter(Slid=id,Status="Pending")
-        #num=bookingdetails.objects.filter(Slid=id,Status="Pending").count()
-        #print(num)
-        return render(request,"bookingstatus.html",{'applist':applist})
-    else:
-        return redirect("salonlogin")
 
 def statusupdate(request,ids):
     if 'sid' in request.session:
@@ -334,6 +316,7 @@ def statusupdate(request,ids):
             return render(request, "statusupdate.html", {'uid': uid})
     else:
         return redirect("salonlogin")
+
 
 def reviewss(request,id):
     if 'cid' in request.session:
@@ -370,6 +353,33 @@ def submitreviews(request,id):
             return render(request,"addreview.html")
     else:
         return redirect("userlogin")
+
+def salonappointments(request):
+    if 'sid' in request.session:
+        id = request.session['sid']
+        applist=bookingdetails.objects.filter(Slid=id,Status="confirmed")
+        return render(request,"salonappointments.html",{'applist':applist})
+    else:
+        return redirect("salonlogin")
+
+def bookings(request):
+    if 'sid' in request.session:
+        id = request.session['sid']
+        applist=bookingdetails.objects.filter(Slid=id,Status="Pending")
+        #num=bookingdetails.objects.filter(Slid=id,Status="Pending").count()
+        #print(num)
+        return render(request,"bookingstatus.html",{'applist':applist})
+    else:
+        return redirect("salonlogin")
+
+def payment(request):
+    if 'cid' in request.session:
+        clid = request.session['cid']
+        applist=bookingdetails.objects.filter(Lid=clid,Status="Confirmed")
+        return render(request,"userbookings.html",{'applist':applist})
+    else:
+        return redirect("userlogin")
+
 
 def logouts(request):
     logout(request)

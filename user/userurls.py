@@ -12,6 +12,7 @@ urlpatterns=[
     path('Salon/Login/AddSalon', views.addsalon, name="addsalon"),
     path('Salon/Login/UpdateSalon', views.updatesalon, name="updatesalon"),
     path('Salon/Login/Bookings', views.bookings, name="bookings"),
+    path('Salon/Login/Appointments', views.salonappointments, name="salonappointments"),
     path('Salon/Login/Bookings/UpdateStatus/<ids>', views.statusupdate, name="statusupdate"),
     path('User/Login/UserHomePage', views.userhome, name="userhome"),
     path('User/Login/HomePage', views.userhomepay, name="userhomepay"),
