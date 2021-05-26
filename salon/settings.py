@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'user',
+    'accounts',
 
 ]
 
@@ -72,6 +73,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'salon.wsgi.application'
+AUTH_USER_MODEL ='accounts.Account'
 
 
 

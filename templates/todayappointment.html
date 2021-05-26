@@ -112,7 +112,6 @@
                             <th>Service</th>
                             <th>Time</th>
                             <th>Status</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                         {% for i in applist %}
@@ -126,7 +125,6 @@
                             <td data-label="Service">{{i.Services}}</td>
                             <td data-label="Time">{{i.Time}}</td>
                             <td data-label="Status">{{i.Status}}</td>
-                            <td data-label="Action"><a class="text-success" href="{% url 'statusupdate' i.id %}">Update Status</a></td>
                         </tr>
                     </tbody>
                         {% endfor %}
