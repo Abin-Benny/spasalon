@@ -16,7 +16,7 @@ height:100vh;
 }
 /*Header section starts*/
 header{
-max-height:80px; ! important;
+max-height:20%; ! important;
 width:100%
 }
 header nav{
@@ -277,6 +277,21 @@ color:white;
 font-family:sans-serif;
 padding-top:60px;
 }
+.salonhome{
+background-image: url("/static/images/water.jpg");
+background-repeat: no-repeat;
+background-size: cover;
+display:inline;
+justify-content: center;
+align-items:center;
+}
+.salonhome .container-fluid .row #cards{
+margin-top:15%;
+margin-bottom:10%;
+}
+.salonhome .container-fluid .row #cards .card{
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 .salonowner .container-fluid .row .stop{
 color:black;
 font-size:sans-serif;
@@ -353,5 +368,4 @@ background-size: cover;
 background-image: url("/static/images/water.jpg");
 background-repeat: no-repeat;
 background-size: cover;
-
 }

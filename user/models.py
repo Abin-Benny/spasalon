@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class salonlogin(models.Model):
     Username=models.EmailField(max_length=50)
-    Password=models.CharField(max_length=20)
+    Password=models.CharField(max_length=250)
    # Role=models.IntegerField(default=1)# 0=admin,1=user
 
 class salonreg(models.Model):
@@ -11,13 +11,13 @@ class salonreg(models.Model):
     First_name=models.CharField(max_length=50)
     Last_name=models.CharField(max_length=50)
     Email=models.EmailField(max_length=50)
-    Password=models.CharField(max_length=20)
+    Password=models.CharField(max_length=250)
     Mobile= models.CharField(max_length=20)
     Address=models.CharField(max_length=250)
 
 class clientlogin(models.Model):
     Username=models.EmailField(max_length=50)
-    Password=models.CharField(max_length=20)
+    Password=models.CharField(max_length=250)
    # Role=models.IntegerField(default=1)# 0=admin,1=user
 
 class clientreg(models.Model):
@@ -25,7 +25,7 @@ class clientreg(models.Model):
     First_name=models.CharField(max_length=50)
     Last_name=models.CharField(max_length=50)
     Email=models.EmailField(max_length=50)
-    Password=models.CharField(max_length=20)
+    Password=models.CharField(max_length=250)
     Mobile= models.CharField(max_length=20)
     Address=models.CharField(max_length=250)
 
@@ -55,3 +55,11 @@ class reviews(models.Model):
     Sid = models.CharField(max_length=50)
     Name = models.CharField(max_length=50)
     Review = models.CharField(max_length=250)
+
+
+class contact(models.Model):
+    First_name = models.CharField(max_length=50)
+    Last_name = models.CharField(max_length=50)
+    Email = models.EmailField(max_length=50)
+    Subject = models.CharField(max_length=50)
+    Message = models.CharField(max_length=50)

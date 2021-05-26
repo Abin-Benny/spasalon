@@ -1,12 +1,47 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth import login,logout
-from user.models import salonlogin,clientlogin,salonreg,clientreg, salondetails,bookingdetails,reviews
+from hashlib import sha256
+from user.models import salonlogin,clientlogin,salonreg,clientreg, salondetails,bookingdetails,reviews,contact
 from django.contrib import messages
+from datetime import date
+import csv
+import xlwt
+
+from django.http import HttpResponse
+from openpyxl import Workbook
+
+import os
+from django.conf import settings
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from django.contrib.staticfiles import finders
 
 # Create your views here.
 
 def index(request):
-    return render(request,"index.html")
+    if request.method == 'POST':
+        fname = request.POST.get('fname')
+        lname = request.POST.get('lname')
+        email = request.POST.get('email')
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
+
+        icontact = contact()
+        icontact.First_name = fname
+        icontact.Last_name = lname
+        icontact.Email = email
+        icontact.Subject = subject
+        icontact.Message = message
+        icontact.save()
+        messages.info(request, "Message sent successfully")
+        return redirect("index")
+    else:
+        return render(request,"index.html")
+
+def salon(request):
+    sdetails = salondetails.objects.all().exclude(Salon_name="", Opening_hours="", Services="", Service_price="", Address="")
+    return render(request, "salon.html", {'sdetails': sdetails})
+
 
 def salonregister(request):
     if request.method == 'POST':
@@ -15,6 +50,7 @@ def salonregister(request):
         semail = request.POST.get('email')
         spassword = request.POST.get('password')
         scpassword = request.POST.get('cpassword')
+        epassword = sha256(spassword.encode()).hexdigest()
         smobile = request.POST.get('mobile')
         saddress = request.POST.get('address')
 
@@ -33,7 +69,7 @@ def salonregister(request):
         else:
             sloginobj = salonlogin()
             sloginobj.Username = semail
-            sloginobj.Password = spassword
+            sloginobj.Password = epassword
             sloginobj.save()
 
             ssalondetails = salondetails()
@@ -45,7 +81,7 @@ def salonregister(request):
             ssalonreg.First_name = sfname
             ssalonreg.Last_name = slname
             ssalonreg.Email = semail
-            ssalonreg.Password = spassword
+            ssalonreg.Password = epassword
             ssalonreg.Mobile = smobile
             ssalonreg.Address = saddress
             ssalonreg.save()
@@ -57,15 +93,17 @@ def salonregister(request):
             return render(request, "salonowner.html", {'fsname': fsname , 'lsname': lsname})
 
     else:
-        return render(request, "salonregister.html")
+        return render(request, "salon_register.html")
 
 def salonlogins(request):
     if request.method == 'POST':
         lsusername = request.POST.get('user')
         lspassword = request.POST.get('password')
-        lsuser = salonlogin.objects.filter(Username=lsusername, Password=lspassword)
+        epassword = sha256(lspassword.encode()).hexdigest()
+        print(epassword)
+        lsuser = salonlogin.objects.filter(Username=lsusername, Password=epassword)
         if lsuser:
-            salonownerdetails = salonlogin.objects.get(Username=lsusername, Password=lspassword)
+            salonownerdetails = salonlogin.objects.get(Username=lsusername, Password=epassword)
             slid = salonownerdetails.id
             request.session['sid'] = slid
             sdetails=salondetails.objects.get(Login_id=slid)
@@ -74,9 +112,9 @@ def salonlogins(request):
             else:
                 return redirect('salonhome')
         else:
-            return render(request, "salon_login.html", {'msg': "Invalid Credentials"})
+            return render(request, "salonlogin.html", {'msg': "Invalid Credentials"})
     else:
-        return render(request, "salon_login.html")
+        return render(request, "salonlogin.html")
 
 
 def salonowner(request):
@@ -95,7 +133,12 @@ def salonhome(request):
         detail = salonreg.objects.get(id=slid)
         fsname = detail.First_name
         lsname = detail.Last_name
-        return render(request, "salonhome.html",{'fsname':fsname,'lsname':lsname})
+
+        today = date.today()
+        datetoday = today.strftime("%m/%d/%Y")
+        appnum=bookingdetails.objects.filter(Status="Paid",Date=datetoday,Slid=slid).count()
+        booknum = bookingdetails.objects.filter(Slid=slid, Status="Pending").count()
+        return render(request, "salonhome.html",{'fsname':fsname,'lsname':lsname,'appnum':appnum,'datetoday':datetoday,'booknum':booknum})
     else:
         return redirect("salonlogin")
 
@@ -168,6 +211,7 @@ def userregister(request):
         uemail = request.POST.get('email')
         upassword = request.POST.get('password')
         ucpassword=request.POST.get('cpassword')
+        epassword = sha256(upassword.encode()).hexdigest()
         umobile = request.POST.get('mobile')
         uaddress = request.POST.get('address')
 
@@ -184,7 +228,7 @@ def userregister(request):
         else:
             cloginobj = clientlogin()
             cloginobj.Username = uemail
-            cloginobj.Password = upassword
+            cloginobj.Password = epassword
             cloginobj.save()
 
             cuserreg = clientreg()
@@ -192,45 +236,41 @@ def userregister(request):
             cuserreg.First_name = ufname
             cuserreg.Last_name = ulname
             cuserreg.Email = uemail
-            cuserreg.Password = upassword
+            cuserreg.Password = epassword
             cuserreg.Mobile = umobile
             cuserreg.Address = uaddress
             cuserreg.save()
-            userdetails = clientlogin.objects.get(Username=uemail, Password=upassword)
+            userdetails = clientlogin.objects.get(Username=uemail, Password=epassword)
             cid = userdetails.id
             request.session['cid'] = cid
             return redirect("userhome")
 
     else:
-        return render(request, "userregister.html")
+        return render(request, "user_register.html")
 
 def userlogin(request):
     if request.method == 'POST':
         lcusername=request.POST.get('user')
         lcpassword=request.POST.get('password')
-        lcuser=clientlogin.objects.filter(Username=lcusername,Password=lcpassword)
+        epassword = sha256(lcpassword.encode()).hexdigest()
+        lcuser=clientlogin.objects.filter(Username=lcusername,Password=epassword)
         if lcuser:
-            userdetails = clientlogin.objects.get(Username=lcusername, Password=lcpassword)
+            userdetails = clientlogin.objects.get(Username=lcusername, Password=epassword)
             cid = userdetails.id
             request.session['cid'] = cid
             return redirect("userhome")
         else:
-            return render(request, "user_login.html", {'msg': "Invalid Credentials"})
+            return render(request, "userlogin.html", {'msg': "Invalid Credentials"})
     else:
-        return render(request, "user_login.html")
+        return render(request, "userlogin.html")
 
 def userhome(request):
     if 'cid' in request.session:
         id = request.session['cid']
-        sdetails = salondetails.objects.all()
+        sdetails = salondetails.objects.all().exclude(Salon_name="", Opening_hours="", Services="", Service_price="", Address="")
         applist = bookingdetails.objects.filter(Lid=id, Status="Confirmed")
-        #return render(request, "userhome.html", {'sdetails': sdetails})
         if applist:
-            #applist = bookingdetails.objects.filter(Lid=id, Status="Confirm")
-            #for s in applist:
-                #k = s.Lid
             return render(request, "userhomepay.html", {'sdetails': sdetails})
-
         else:
             return render(request, "userhome.html", {'sdetails': sdetails})
     else:
@@ -281,22 +321,35 @@ def appsubmit(request,id):
 def userhomepay(request):
     if 'cid' in request.session:
         id = request.session['cid']
-        sdetails = salondetails.objects.all()
+        sdetails = salondetails.objects.all().exclude(Salon_name="", Opening_hours="", Services="", Service_price="", Address="")
         applist = bookingdetails.objects.filter(Lid=id, Status="Confirmed")
         if applist:
-            '''applist = bookingdetails.objects.filter(Lid=id, Status="Confirmed")
-            for s in applist:
-                k = s.Lid'''
             return render(request, "userhomepay.html", {'sdetails': sdetails})
         else:
             return render(request, "userhome.html", {'sdetails': sdetails})
     else:
         return redirect("userlogin")
 
-def pay(request):
+def pay(request,id):
     if 'cid' in request.session:
         clid = request.session['cid']
-        return render(request,"bank.html")
+        return render(request,"bank.html",{'id':id})
+    else:
+        return redirect("userlogin")
+
+def card(request,id):
+    if 'cid' in request.session:
+        clid = request.session['cid']
+        if request.method == 'POST':
+            fullname = request.POST.get('fname')
+            cnumber = request.POST.get('cardno')
+            cvv = request.POST.get('cvv')
+            udetail = bookingdetails.objects.get(id=id, Status="Confirmed")
+            udetail.Status = "Paid"
+            udetail.save()
+            return redirect("userhome")
+        else:
+            return redirect("card")
     else:
         return redirect("userlogin")
 
@@ -357,7 +410,7 @@ def submitreviews(request,id):
 def salonappointments(request):
     if 'sid' in request.session:
         id = request.session['sid']
-        applist=bookingdetails.objects.filter(Slid=id,Status="confirmed")
+        applist=bookingdetails.objects.filter(Slid=id,Status="Paid")
         return render(request,"salonappointments.html",{'applist':applist})
     else:
         return redirect("salonlogin")
@@ -372,6 +425,102 @@ def bookings(request):
     else:
         return redirect("salonlogin")
 
+def todayappointments(request):
+    if 'sid' in request.session:
+        id = request.session['sid']
+        today = date.today()
+        datetoday = today.strftime("%m/%d/%Y")
+        applist = bookingdetails.objects.filter(Status="Paid", Date=datetoday, Slid=id)
+        print(applist)
+        for i in applist:
+            print(i.Email)
+        return render(request,"todayappointment.html",{'applist':applist,'dates':  datetoday})
+    else:
+        return redirect("salonlogin")
+
+def exportcsv(request):
+    if 'sid' in request.session:
+        id = request.session['sid']
+        today = date.today()
+        datetoday = today.strftime("%m/%d/%Y")
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition']='Attachment:filename= todaysappointments'+str(datetoday)+'.csv'
+        writer=csv.writer(response)
+        writer.writerow(['First Name', 'Last Name', 'Email', 'Mobile', 'Service', 'Time', 'Status'])
+        applist = bookingdetails.objects.filter(Status="Paid", Date=datetoday, Slid=id)
+        for i in applist:
+            writer.writerow([i.First_name,i.Last_name,i.Email,i.Mobile,i.Services,i.Time,i.Status])
+        return response
+
+def exportexcel(request):
+    if 'sid' in request.session:
+        id = request.session['sid']
+        today = date.today()
+        datetoday = today.strftime("%m/%d/%Y")
+        #applist = bookingdetails.objects.filter(Status="Paid", Date=datetoday, Slid=id)
+        response = HttpResponse(content_type='application/ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="todaysappointments.xls"'
+
+        wb = xlwt.Workbook(encoding='utf-8')
+        ws = wb.add_sheet('Todays Appointments')  # this will make a sheet named Users Data
+
+        # Sheet header, first row
+        row_num = 0
+
+        font_style = xlwt.XFStyle()
+        font_style.font.bold = True
+
+        columns = ['First Name', 'Last Name', 'Email', 'Mobile', 'Services', 'Time', 'Status', ]
+
+        for col_num in range(len(columns)):
+            ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+        # Sheet body, remaining rows
+        font_style = xlwt.XFStyle()
+
+        rows = bookingdetails.objects.filter(Status="Paid", Date=datetoday, Slid=id).values_list('First_name', 'Last_name', 'Email', 'Mobile', 'Services', 'Time', 'Status')
+        for row in rows:
+            row_num += 1
+            for col_num in range(len(row)):
+                ws.write(row_num, col_num, row[col_num], font_style)
+
+
+        wb.save(response)
+
+        return response
+
+def exportpdf(request):
+    if 'sid' in request.session:
+        id = request.session['sid']
+        today = date.today()
+        datetoday = today.strftime("%m/%d/%Y")
+        sname= salondetails.objects.filter(Login_id=id)
+        for i in sname:
+            salonname=i.Salon_name
+        applist =  bookingdetails.objects.filter(Status="Paid", Date=datetoday, Slid=id)
+
+        template_path = 'pdf.html'
+        context = {'applist': applist,'dates':datetoday,'salonname':salonname}
+        # Create a Django response object, and specify content_type as pdf
+        response = HttpResponse(content_type='application/pdf')
+        # If you  don't want to download it directly or you want to view the pdf then download it,use below code
+        response['Content-Disposition'] = 'filename="report.pdf"'
+        #If you want to download it directly,use below code
+        #response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+        # find the template and render it.
+        template = get_template(template_path)
+        html = template.render(context)
+
+        # create a pdf
+        pisa_status = pisa.CreatePDF(
+            html, dest=response)
+        # if error then show some funy view
+        if pisa_status.err:
+            return HttpResponse('We had some errors <pre>' + html + '</pre>')
+        return response
+
+
+
 def payment(request):
     if 'cid' in request.session:
         clid = request.session['cid']
@@ -379,6 +528,24 @@ def payment(request):
         return render(request,"userbookings.html",{'applist':applist})
     else:
         return redirect("userlogin")
+
+
+def user_forgot_password(request):
+    return render(request,"forgot_password.html")
+
+def user_forgot_password_reset(request):
+    if request.method == 'GET':
+        un = request.GET.get('username', None)
+        print(un)
+        try:
+            user = get_object_or_404(clientlogin, Username=un)
+            return HttpResponse(user.Username)
+        except:
+            return HttpResponse("No user registered with this Email ID")
+
+
+
+
 
 
 def logouts(request):

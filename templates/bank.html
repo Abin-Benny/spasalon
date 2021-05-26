@@ -36,7 +36,7 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                        <form method="POST" name="reg" action="#">
+                        <form method="POST" name="reg" action="{% url 'card' id %}">
                              {%csrf_token%}
                              <div class="form-group">
                                     <label for="fname">Full Name</label>
@@ -50,14 +50,11 @@
                             <div class="form-group">
                                 <label for="cvv">CVV</label>
                                 <input type="text" class="form-control" id="cvv" name="cvv" placeholder="CVV Number" required>
-
                             </div>
-
                              <center>
                                  <button type="submit" class="btn btn-success">Submit</button>
                              </center>
                         </form>
-
                 </div>
             </div>
         </div>

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="{% static 'styles/style.css' %}" rel="stylesheet"/>
 </head>
-<body class="sowner">
+<body id="salonhome">
 <!--Header Section Starts-->
     <header>
                     <nav class="navbar navbar-expand-lg navbar-light bg-dark fixed-top shadow">
@@ -33,6 +33,7 @@
                                     <a class="nav-link text-success" href="{% url 'logouts' %}">Logout</a>
                                 </li>
                             </ul>
+                            <span class="p-2 text-white">{{fsname}} {{lsname}}</span>
                         </div>
                     </nav>
     </header>
@@ -41,13 +42,28 @@
 <section class="salonhome">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12">
-                <div class="text-right">
-                     <p>Welcome , {{fsname}} {{lsname}}</p>
+                <div class="col-12" id="cards">
+                    <center>
+                    <div class="card text-white bg-dark mb-3" style="max-width: 25rem;">
+                        <div class="card-header">{{datetoday}}</div>
+                        <div class="card-body">
+                            <h5 class="card-title text-success">Today's Appointments</h5>
+                            <p class="card-text">You Have &nbsp <span class="text-danger">{{appnum}}</span> &nbsp Appointments Today.</p>
+                            <a href="{% url 'todayappointments' %}" class="btn btn-success">Click Here</a>
+                        </div>
+                    </div>
+                    </center>
+                    <center>
+                    <div class="card text-white bg-dark mb-3" style="max-width: 25rem;">
+                        <div class="card-header">Bookings</div>
+                        <div class="card-body">
+                            <h5 class="card-title text-success">Pending Requests</h5>
+                            <p class="card-text">You Have &nbsp <span class="text-danger">{{booknum}}</span> &nbsp Pending Booking Requests.</p>
+                            <a href="{% url 'bookings' %}" class="btn btn-success">Click Here</a>
+                        </div>
+                    </div>
+                    </center>
                 </div>
-
-
-            </div>
         </div>
     </div>
 </section>

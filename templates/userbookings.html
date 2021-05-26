@@ -118,7 +118,7 @@
                             <td data-label="Date">{{i.Date}}</td>
                             <td data-label="Time">{{i.Time}}</td>
                             <td data-label="Status">{{i.Status}}</td>
-                            <td><a class="text-success" href="{% url 'pay' %}">Make Payment</a></td>
+                            <td><a class="text-success" href="{% url 'pay' i.id %}">Make Payment</a></td>
                         </tr>
                     </tbody>
                         {% endfor %}

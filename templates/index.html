@@ -33,7 +33,7 @@
                                     <a class="nav-link text-success" href="{% url 'userlogin' %}">Appointment</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-success" href="salon.html">Salon</a>
+                                    <a class="nav-link text-success" href="{% url 'salon' %}">Salon</a>
                                 </li>
                             </ul>
                         </div>
@@ -76,7 +76,7 @@
             <div class="row">
                 <div class="col-12">
                     <h1>Do You Want To Find Out Your Dream <span>Spa</span> And <span>Salon</span>???</h1><br>
-                    <a href="salon_details.html">Click Here...</a>
+                    <a href="{% url 'salon' %}">Click Here...</a>
                 </div>
             </div>
         </div>
@@ -162,7 +162,13 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                        <form method="POST" name="contact">
+                        <form method="POST" name="contact" action="{% url 'index' %}">
+                            {%csrf_token%}
+                            {% for msg in messages %}
+                            <center>
+                                <h5 style="color:green;">{{msg}}</h5>
+                            </center>
+                            {% endfor %}
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="fname">First Name</label>
