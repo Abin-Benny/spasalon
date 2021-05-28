@@ -63,3 +63,6 @@ class contact(models.Model):
     Email = models.EmailField(max_length=50)
     Subject = models.CharField(max_length=50)
     Message = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.Subject

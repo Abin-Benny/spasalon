@@ -33,7 +33,7 @@ def index(request):
         icontact.Subject = subject
         icontact.Message = message
         icontact.save()
-        messages.info(request, "Message sent successfully")
+        messages.info(request, "Your Message sent successfully")
         return redirect("index")
     else:
         return render(request,"index.html")
