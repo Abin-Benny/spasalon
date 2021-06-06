@@ -535,13 +535,17 @@ def user_forgot_password(request):
 
 def user_forgot_password_reset(request):
     if request.method == 'GET':
-        un = request.GET.get('username', None)
+        un = request.GET.get('username')
         print(un)
         try:
             user = get_object_or_404(clientlogin, Username=un)
             return HttpResponse(user.Username)
         except:
             return HttpResponse("No user registered with this Email ID")
+
+    else:
+        return render(request, "forgot_password.html")
+
 
 
 
