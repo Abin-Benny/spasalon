@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path,re_path
 from . import views
 
 urlpatterns=[
@@ -30,6 +30,6 @@ urlpatterns=[
     path('Reviews/<id>', views.reviewss, name="reviews"),
     path('AddReview/<id>', views.addreviews, name="addreviews"),
     path('Review_Form/<id>', views.submitreviews, name="submitreviews"),
-    path('User/Forgot_Password',views.user_forgot_password,name="ufpassword"),
+    re_path(r'^User/Forgot_Password$', views.user_forgot_password, name="ufpassword"),
     path('User/Forgot_Password/Reset',views.user_forgot_password_reset,name="passwordreset"),
     ]
