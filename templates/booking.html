@@ -55,29 +55,25 @@
                                 <div class="form-group col-md-6">
                                     <label for="fname">First Name</label>
                                     <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name" required>
-                                    <span id="lfname"></span>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="lname">Last Name</label>
                                     <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name" required>
-                                    <span id="llname"></span>
                                 </div>
                             </div>
                              <div class="form-group">
                                  <label for="email">Email</label>
                                  <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-                                 <span id="lemail"></span>
                              </div>
                             <div class="form-group">
                                  <label for="mobile">Mobile</label>
                                  <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile" required>
-                                 <span id="lmob"></span>
                              </div>
 
                             <div class="form-group">
                                  <label for="service">Service</label><br>
                                  <select name="service" id="service">
-                                     <option value="">Select Your Service</option>
+                                     <option disabled="disabled" selected="selected">Select Your Service</option>
                                      {%if oneserve %}
                                      <option value="{{oneserve}}">{{ oneserve }}</option>
                                      {% else %}
@@ -86,16 +82,15 @@
                                      {% endfor %}
                                      {% endif %}
                                  </select>
-                                 <span id="lmob"></span>
                              </div>
 
                              <div class="form-group">
                                 <label>Date</label>
-                                <input type="text" id="dates" name="dates" class="form-control"  placeholder="Enter Date">
+                                <input type="text" id="dates" name="dates" class="form-control"  placeholder="Enter Date" required>
                              </div>
                             <div class="timepicker_div">
                                 <label>Time</label>
-                                <input type="text"  class="form-control timepicker" name="times" placeholder=" Time">
+                                <input type="text"  class="form-control timepicker" name="times" placeholder="Time" required>
                             </div><br><br>
                              <center>
                                  <button type="submit" class="btn btn-success">Submit</button>

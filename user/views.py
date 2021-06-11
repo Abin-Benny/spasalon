@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from django.contrib.auth import login,logout
+from django.contrib.auth import logout
 from hashlib import sha256
 from user.models import salonlogin,clientlogin,salonreg,clientreg, salondetails,bookingdetails,reviews,contact
 from django.contrib import messages
@@ -8,13 +8,12 @@ import csv
 import xlwt
 
 from django.http import HttpResponse
-from openpyxl import Workbook
-
-import os
 from django.conf import settings
 from django.template.loader import get_template
 from xhtml2pdf import pisa
-from django.contrib.staticfiles import finders
+from django.core.mail import send_mail
+
+
 
 # Create your views here.
 
@@ -48,8 +47,8 @@ def salonregister(request):
         sfname = request.POST.get('fname')
         slname = request.POST.get('lname')
         semail = request.POST.get('email')
-        spassword = request.POST.get('password')
-        scpassword = request.POST.get('cpassword')
+        spassword = request.POST.get('pass')
+        scpassword = request.POST.get('cpass')
         epassword = sha256(spassword.encode()).hexdigest()
         smobile = request.POST.get('mobile')
         saddress = request.POST.get('address')
@@ -57,11 +56,9 @@ def salonregister(request):
         if (salonreg.objects.filter(Email=semail).exists()):
             messages.info(request, "Email ID Already Taken")
             return redirect('salonregister')
-
         elif (spassword != scpassword):
             messages.info(request, "Password Doesn't Match")
             return redirect('salonregister')
-
         elif (salonreg.objects.filter(Mobile=smobile).exists()):
             messages.info(request, "Mobile Number Already Taken")
             return redirect('salonregister')
@@ -93,7 +90,7 @@ def salonregister(request):
             return render(request, "salonowner.html", {'fsname': fsname , 'lsname': lsname})
 
     else:
-        return render(request, "salon_register.html")
+        return render(request, "salonregister.html")
 
 def salonlogins(request):
     if request.method == 'POST':
@@ -209,8 +206,8 @@ def userregister(request):
         ufname = request.POST.get('fname')
         ulname = request.POST.get('lname')
         uemail = request.POST.get('email')
-        upassword = request.POST.get('password')
-        ucpassword=request.POST.get('cpassword')
+        upassword = request.POST.get('pass')
+        ucpassword=request.POST.get('cpass')
         epassword = sha256(upassword.encode()).hexdigest()
         umobile = request.POST.get('mobile')
         uaddress = request.POST.get('address')
@@ -246,7 +243,7 @@ def userregister(request):
             return redirect("userhome")
 
     else:
-        return render(request, "user_register.html")
+        return render(request, "userregister.html")
 
 def userlogin(request):
     if request.method == 'POST':
@@ -529,29 +526,285 @@ def payment(request):
     else:
         return redirect("userlogin")
 
-
 def user_forgot_password(request):
-    return render(request,"forgot_password.html")
+    if request.method == 'POST':
+        email = request.POST.get('username')
+        print(email)
+        cuser = clientreg.objects.filter(Email=email)
+        if cuser:
+            subject = "Password Reset Link"
+            msg = "Click this link to reset your password"
+            to = email
+            send_mail(subject, msg, settings.EMAIL_HOST_USER, [to], fail_silently = False)
+            return render(request, "forgot_password.html", {'msg': "Password Reset Link sent to Your Registered Email ID.Please check your Email"})
 
-def user_forgot_password_reset(request):
-    if request.method == 'GET':
-        un = request.GET.get('username')
-        print(un)
-        try:
-            user = get_object_or_404(clientlogin, Username=un)
-            return HttpResponse(user.Username)
-        except:
-            return HttpResponse("No user registered with this Email ID")
-
+        else:
+            return render(request, "forgot_password.html",{'msg': "Entered Username is not registered.Please check your Username"})
     else:
         return render(request, "forgot_password.html")
-
-
-
-
-
-
 
 def logouts(request):
     logout(request)
     return redirect("index")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

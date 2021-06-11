@@ -46,8 +46,8 @@
                     {%csrf_token%}
                     <center>
                         <h3>Update <span>Booking Status</span></h3><br><br><br>
-                        <select name="status" id="status">
-                            <option value="">Update status</option>
+                        <select name="status" id="status" required>
+                           <option disabled="disabled" selected="selected">Update Status</option>
                             <option value="Confirmed">Confirm</option>
                             <option value="Rejected">Reject</option>
                         </select><br><br>
