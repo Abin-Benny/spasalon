@@ -31,5 +31,5 @@ urlpatterns=[
     path('AddReview/<id>', views.addreviews, name="addreviews"),
     path('Review_Form/<id>', views.submitreviews, name="submitreviews"),
     path('User/Forgot_Password', views.user_forgot_password, name="ufpassword"),
-
+    path('Forgot_Password_Reset', views.user_forgot_password_reset, name="ufpasswordreset"),
     ]

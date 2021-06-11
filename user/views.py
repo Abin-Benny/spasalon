@@ -542,6 +542,32 @@ def user_forgot_password(request):
             return render(request, "forgot_password.html",{'msg': "Entered Username is not registered.Please check your Username"})
     else:
         return render(request, "forgot_password.html")
+def user_forgot_password_reset(request):
+    if request.method == 'POST':
+        femail = request.POST.get('username')
+        fpassword = request.POST.get('pass')
+        fepassword = sha256(fpassword.encode()).hexdigest()
+        fcpassword = request.POST.GET('cpass')
+        if (fpassword != fcpassword):
+            messages.info(request, "Password Doesn't Match")
+            return redirect('ufpasswordreset')
+        else:
+            udetail = clientreg.objects.filter(Email=femail)
+            for i in udetail:
+                i.Password = fepassword
+                i.save()
+            udetails = clientlogin.objects.filter(Username=femail)
+            for x in udetails:
+                x.Password = fepassword
+                x.save()
+            return redirect("userlogin")
+    else:
+        return render(request, "forgot_reset.html")
+
+
+
+
+
 
 def logouts(request):
     logout(request)
