@@ -533,7 +533,7 @@ def user_forgot_password(request):
         cuser = clientreg.objects.filter(Email=email)
         if cuser:
             subject = "Password Reset Link"
-            msg = "Click this link http://127.0.0.1:8000/Forgot_Password_Reset to reset your password"
+            msg = "Dear Customer,Click this link http://127.0.0.1:8000/User/Forgot_Password_Reset to reset your password"
             to = email
             send_mail(subject, msg, settings.EMAIL_HOST_USER, [to], fail_silently = False)
             return render(request, "forgot_password.html", {'msg': "Password Reset Link sent to Your Registered Email ID.Please check your Email"})
@@ -552,19 +552,61 @@ def user_forgot_password_reset(request):
         fepassword = sha256(fpassword.encode()).hexdigest()
         fcpassword = request.POST.get('cpass')
         print(fcpassword)
-        detail = clientreg.objects.filter(Email=femail)
-        for i in detail:
-            i.Password = fepassword
-            i.save()
-        details = clientlogin.objects.filter (Username=femail)
-        for x in details:
-            x.Password = fepassword
-            x.save()
-        return redirect("userlogin")
+        if (fpassword != fcpassword):
+            messages.info(request, "Password Doesn't Match")
+            return redirect('ufpasswordreset')
+        else:
+            detail = clientreg.objects.filter(Email=femail)
+            for i in detail:
+                i.Password = fepassword
+                i.save()
+            details = clientlogin.objects.filter (Username=femail)
+            for x in details:
+                x.Password = fepassword
+                x.save()
+            return redirect("userlogin")
     else:
         return render(request, "password_reset.html")
 
 
+def salon_forgot_password(request):
+    if request.method == 'POST':
+        email = request.POST.get('username')
+        print(email)
+        cuser = salonreg.objects.filter(Email=email)
+        if cuser:
+            subject = "Password Reset Link"
+            msg = "Dear Salon Owner,Click this link http://127.0.0.1:8000/Salon/Forgot_Password_Reset to reset your password"
+            to = email
+            send_mail(subject, msg, settings.EMAIL_HOST_USER, [to], fail_silently = False)
+            return render(request, "salon_forgot_password.html", {'msg': "Password Reset Link sent to Your Registered Email ID.Please check your Email"})
+
+        else:
+            return render(request, "salon_forgot_password.html",{'msg': "Entered Username is not registered.Please check your Username"})
+    else:
+        return render(request, "salon_forgot_password.html")
+def salon_forgot_password_reset(request):
+    if request.method == 'POST':
+        femail = request.POST.get('email')
+        fpassword = request.POST.get('pass')
+        fepassword = sha256(fpassword.encode()).hexdigest()
+        fcpassword = request.POST.get('cpass')
+
+        if (fpassword != fcpassword):
+            messages.info(request, "Password Doesn't Match")
+            return redirect('sfpasswordreset')
+        else:
+            detail = salonreg.objects.filter(Email=femail)
+            for i in detail:
+                i.Password = fepassword
+                i.save()
+            details = salonlogin.objects.filter (Username=femail)
+            for x in details:
+                x.Password = fepassword
+                x.save()
+            return redirect("salonlogin")
+    else:
+        return render(request, "salon_password_reset.html")
 
 
 
