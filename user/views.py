@@ -533,7 +533,7 @@ def user_forgot_password(request):
         cuser = clientreg.objects.filter(Email=email)
         if cuser:
             subject = "Password Reset Link"
-            msg = "Click this link to reset your password"
+            msg = "Click this link http://127.0.0.1:8000/Forgot_Password_Reset to reset your password"
             to = email
             send_mail(subject, msg, settings.EMAIL_HOST_USER, [to], fail_silently = False)
             return render(request, "forgot_password.html", {'msg': "Password Reset Link sent to Your Registered Email ID.Please check your Email"})
@@ -544,25 +544,25 @@ def user_forgot_password(request):
         return render(request, "forgot_password.html")
 def user_forgot_password_reset(request):
     if request.method == 'POST':
-        femail = request.POST.get('username')
+        print("hi")
+        femail = request.POST.get('email')
+        print(femail)
         fpassword = request.POST.get('pass')
+        print(fpassword)
         fepassword = sha256(fpassword.encode()).hexdigest()
-        fcpassword = request.POST.GET('cpass')
-        if (fpassword != fcpassword):
-            messages.info(request, "Password Doesn't Match")
-            return redirect('ufpasswordreset')
-        else:
-            udetail = clientreg.objects.filter(Email=femail)
-            for i in udetail:
-                i.Password = fepassword
-                i.save()
-            udetails = clientlogin.objects.filter(Username=femail)
-            for x in udetails:
-                x.Password = fepassword
-                x.save()
-            return redirect("userlogin")
+        fcpassword = request.POST.get('cpass')
+        print(fcpassword)
+        detail = clientreg.objects.filter(Email=femail)
+        for i in detail:
+            i.Password = fepassword
+            i.save()
+        details = clientlogin.objects.filter (Username=femail)
+        for x in details:
+            x.Password = fepassword
+            x.save()
+        return redirect("userlogin")
     else:
-        return render(request, "forgot_reset.html")
+        return render(request, "password_reset.html")
 
 
 
