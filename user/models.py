@@ -4,7 +4,7 @@ from django.db import models
 class salonlogin(models.Model):
     Username=models.EmailField(max_length=50)
     Password=models.CharField(max_length=250)
-   # Role=models.IntegerField(default=1)# 0=admin,1=user
+
 
 class salonreg(models.Model):
     Login_id=models.ForeignKey(salonlogin,on_delete=models.CASCADE)
