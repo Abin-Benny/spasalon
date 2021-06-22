@@ -1,4 +1,4 @@
-# spasalon
+# spasalon(Salon Management System)
 
 The main aim of this project is to develop a Salon Management System named “SpaSalon”.This web application is developed using Python Django Framework. This system allows the customer to choose any one of the salon or spa that is registered with the system. If a person selects a particular salon or spa , he or she can take appointment. If the salon owner is ‘OK’ with the appointment date and time ,they can confirm the appointment otherwise they can reject it. Customer can select their Salon based on previous customer reviews. For that, Customer should register with this system. This system consist of two modules named “Admin” and “User”.
 User is the main module of this system. Here in this system mainly two types of users are there : Customers and Salon Owners. User module is created under “user” app. Salon owner can register their salon or spa with this system by providing the basic details. Also they can update their salon details in future. They can view their appointment list even after login .
